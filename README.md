@@ -15,4 +15,3 @@ including IAM resources will require administrator level permissions.
 
 ## Example Deployments
 * [Basic](examples/basic/README.md)
-* [VPC Flow (Private Preview)](examples/vpc_flow/README.md)

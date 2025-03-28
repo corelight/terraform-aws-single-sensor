@@ -1,4 +1,4 @@
-variable "corelight_sensor_ami_id" {
+variable "ami_id" {
   type        = string
   description = "The AMI ID to use for the Corelight Sensor"
 }
@@ -8,24 +8,72 @@ variable "region" {
   description = "The region to deploy resources into"
 }
 
-variable "management_subnet_id" {
-  description = "The ID of the subnet where the management network interface will reside"
-  type        = string
-}
-
-variable "monitoring_subnet_id" {
-  description = "The ID of the subnet where the monitoring network interface will reside"
-  type        = string
-}
-
-variable "vpc_id" {
-  type        = string
-  description = "The ID of the VPC to deploy in"
-}
-
 variable "aws_key_pair_name" {
   description = "The name of the AWS key pair that will be used to access the sensor instances in the auto-scale group"
   type        = string
+}
+
+variable "fleet_community_string" {
+  description = "the Fleet Manager community string (api string)"
+  type        = string
+  sensitive   = true
+}
+
+variable "management_interface_id" {
+  type    = string
+  default = ""
+}
+
+variable "management_interface" {
+  type = object({
+    name : string
+    index : number
+    subnet_id : string
+    associate_public_ip_address : bool
+  })
+  default = null
+}
+
+variable "monitoring_interface_id" {
+  type    = string
+  default = ""
+}
+
+variable "monitoring_interface" {
+  type = object({
+    name : string
+    index : number
+    subnet_id : string
+  })
+  default = null
+}
+
+variable "monitoring_security_group" {
+  type = object({
+    name : string
+    description : string
+    vpc_id : string
+  })
+  default = null
+}
+
+variable "monitoring_security_group_id" {
+  type    = string
+  default = ""
+}
+
+variable "management_security_group" {
+  type = object({
+    name : string
+    description : string
+    vpc_id : string
+  })
+  default = null
+}
+
+variable "management_security_group_id" {
+  type    = string
+  default = ""
 }
 
 variable "ssh_allow_cidrs" {
@@ -86,22 +134,10 @@ variable "management_security_group_name" {
   default     = "corelight-management-sg"
 }
 
-variable "management_security_group_description" {
-  description = "Name of the security group used to allow SSH access to the sensor"
-  type        = string
-  default     = "Security group for the sensor which allows ssh"
-}
-
 variable "monitoring_security_group_name" {
   description = "The Name of the Sensor Security Group"
   type        = string
   default     = "corelight-management-sg"
-}
-
-variable "monitoring_security_group_description" {
-  description = "Name of the security group used to allow SSH access to the sensor"
-  type        = string
-  default     = "Security group for the sensor which allows ssh"
 }
 
 variable "tags" {
@@ -114,17 +150,6 @@ variable "license_key_file_path" {
   description = "The path to your Corelight sensor license key"
   type        = string
   sensitive   = true
-}
-
-variable "fleet_community_string" {
-  description = "the Fleet Manager community string (api string)"
-  type        = string
-  sensitive   = true
-}
-
-variable "iam_instance_profile_name" {
-  description = "The IAM Instance Profile name to launch the instance with"
-  type        = string
   default     = ""
 }
 
@@ -139,24 +164,5 @@ variable "fleet_config" {
   })
   description = "(optional) Configuration for Fleet"
   sensitive   = true
-  default = {
-    token           = ""
-    url             = ""
-    server_ssl_name = ""
-    http_proxy      = ""
-    https_proxy     = ""
-    no_proxy        = ""
-  }
-}
-
-variable "cloud_enrichment_config" {
-  type = object({
-    bucket_name   = string
-    bucket_region = string
-  })
-  description = "(optional) configuration for Corelight cloud enrichment"
-  default = {
-    bucket_name   = ""
-    bucket_region = ""
-  }
+  default     = null
 }

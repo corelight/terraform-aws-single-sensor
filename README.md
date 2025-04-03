@@ -24,7 +24,7 @@ monitoring_interface_id = "<your monitoring ENI ID>"
 
 // Monitoring Interface - Module Provided (Option B)
 monitoring_interface_subnet_id = "<your monitoring subnet id>"
-monitoring_interface_name      = "<your preferred interface name" // default: corelight-mon-nic
+monitoring_interface_name      = "<your preferred interface name>" // default: corelight-mon-nic
 
 // Monitoring Interface Security Group - User Provided (Option A)
 // Rules will be added to the security group provided
@@ -54,11 +54,11 @@ management_security_group_description = "<your preferred security group descript
 
 // Security Rules Configuration
 ssh_allow_cidrs          = ["<CIDRs allowed to SSH to a public mgmt nic>"] // default: []
-egress_allow_cidrs       = ["<your preferred egress CIDR(s)"]              // default: ["0.0.0.0/0"]
-health_check_allow_cidrs = ["<your preferred health check CIDR(s)"]        // default: ["0.0.0.0/0"]
+egress_allow_cidrs       = ["<your preferred egress CIDR(s)>"]              // default: ["0.0.0.0/0"]
+health_check_allow_cidrs = ["<your preferred health check CIDR(s)>"]        // default: ["0.0.0.0/0"]
 
 // Recommend using the CIDR of the VPC being monitored
-mirror_ingress_allow_cidrs = ["<your preferred mirror CIDR(s)"] // default: ["0.0.0.0/0"]
+mirror_ingress_allow_cidrs = ["<your preferred mirror CIDR(s)>"] // default: ["0.0.0.0/0"]
 
 // Licensing Module Provided - with Fleet (Option A)
 fleet_config = {

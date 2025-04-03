@@ -33,9 +33,3 @@ variable "iam_instance_profile_name" {
   type    = string
   default = ""
 }
-
-variable "tags" {
-  type    = object({})
-  default = {}
-}
-

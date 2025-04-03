@@ -13,9 +13,3 @@ variable "associate_public_ip_address" {
 variable "security_group_ids" {
   type = list(string)
 }
-
-variable "tags" {
-  type    = object({})
-  default = {}
-}
-

@@ -1,11 +1,6 @@
 variable "ami_id" {
+  description = "The AMI ID provided by Corelight"
   type        = string
-  description = "The AMI ID to use for the Corelight Sensor"
-}
-
-variable "region" {
-  type        = string
-  description = "The region to deploy resources into"
 }
 
 variable "aws_key_pair_name" {
@@ -20,76 +15,93 @@ variable "fleet_community_string" {
 }
 
 variable "management_interface_id" {
-  type    = string
-  default = ""
+  description = "Used in place of the 'management_interface' variable if you would like to provide one"
+  type        = string
+  default     = ""
 }
 
-variable "management_interface" {
-  type = object({
-    name : string
-    index : number
-    subnet_id : string
-    associate_public_ip_address : bool
-  })
-  default = null
+variable "management_interface_name" {
+  description = "The name of the management interface for the sensor"
+  type        = string
+  default     = "corelight-mgmt-nic"
+}
+
+variable "management_interface_subnet_id" {
+  description = "The subnet id of the management interface for the sensor"
+  type        = string
+  default     = ""
+}
+
+variable "management_interface_public_ip" {
+  description = "The flag to determine if the management interface for the sensor should have a publicly assigned IP address"
+  type        = bool
+  default     = false
 }
 
 variable "monitoring_interface_id" {
-  type    = string
-  default = ""
+  description = "The ID of a pre-exiting ENI if you would rather create it outside of the module"
+  type        = string
+  default     = ""
 }
 
-variable "monitoring_interface" {
-  type = object({
-    name : string
-    index : number
-    subnet_id : string
-  })
-  default = null
+variable "monitoring_interface_name" {
+  description = "The name of the monitoring interface for the sensor"
+  type        = string
+  default     = "corelight-mon-nic"
 }
 
-variable "monitoring_security_group" {
-  type = object({
-    name : string
-    description : string
-    vpc_id : string
-  })
-  default = null
+variable "monitoring_interface_subnet_id" {
+  description = ""
+  type        = string
+  default     = ""
 }
 
 variable "monitoring_security_group_id" {
-  type    = string
-  default = ""
+  description = "Used in place of the 'monitoring_security_group' variable if you would like to provide one"
+  type        = string
+  default     = ""
 }
 
-variable "management_security_group" {
-  type = object({
-    name : string
-    description : string
-    vpc_id : string
-  })
-  default = null
+variable "monitoring_security_group_name" {
+  description = ""
+  type        = string
+  default     = "corelight-sensor-mon-sg"
+}
+
+variable "monitoring_security_group_description" {
+  description = ""
+  type        = string
+  default     = "Corelight Sensor Monitoring SG"
+}
+
+variable "monitoring_security_group_vpc_id" {
+  description = ""
+  type        = string
+  default     = ""
 }
 
 variable "management_security_group_id" {
-  type    = string
-  default = ""
+  description = "Used in place of the 'management_security_group' variable if you would like to provide one"
+  type        = string
+  default     = ""
 }
 
-variable "ssh_allow_cidrs" {
-  description = "List of CIDRs from which SSH access is allowed"
-  type        = list(string)
+variable "management_security_group_name" {
+  description = ""
+  type        = string
+  default     = "corelight-sensor-mgmt-sg"
 }
 
-variable "mirror_allow_cidrs" {
-  description = "List of CIDRs from which GENEVE traffic can be mirrored from"
+variable "management_security_group_description" {
+  description = ""
+  type        = string
+  default     = "Corelight Sensor Managment SG"
 }
 
-## Defaults
-variable "associate_public_ip_address" {
-  description = "Associate a public IP address with the sensor management NIC"
-  type        = bool
-  default     = false
+variable "management_security_group_vpc_id" {
+  description = ""
+  type        = string
+  default     = ""
 }
 
 variable "custom_sensor_user_data" {
@@ -104,18 +116,6 @@ variable "instance_name" {
   default     = "corelight-sensor"
 }
 
-variable "management_network_interface_name" {
-  description = "The name of the management network interface for the sensor"
-  type        = string
-  default     = "corelight-sensor-nic"
-}
-
-variable "monitoring_network_interface_name" {
-  description = "The name of the monitoring network interface for the sensor"
-  type        = string
-  default     = "corelight-sensor-nic"
-}
-
 variable "instance_type" {
   description = "The type of the EC2 instance"
   type        = string
@@ -128,32 +128,15 @@ variable "ebs_volume_size" {
   default     = 500
 }
 
-variable "management_security_group_name" {
-  description = "The Name of the Sensor Security Group"
-  type        = string
-  default     = "corelight-management-sg"
-}
-
-variable "monitoring_security_group_name" {
-  description = "The Name of the Sensor Security Group"
-  type        = string
-  default     = "corelight-management-sg"
-}
-
-variable "tags" {
-  description = "Any tags that should be applied to resources deployed by the module"
-  type        = object({})
-  default     = {}
-}
-
 variable "license_key_file_path" {
-  description = "The path to your Corelight sensor license key"
+  description = "The path to your Corelight sensor license key. This must be provided if not licensing through fleet"
   type        = string
   sensitive   = true
   default     = ""
 }
 
 variable "fleet_config" {
+  description = "(optional) Configuration for Fleet. This can be used in place of `license_key_file_path` for licensing the sensor"
   type = object({
     token           = string
     url             = string
@@ -162,7 +145,38 @@ variable "fleet_config" {
     https_proxy     = string
     no_proxy        = string
   })
-  description = "(optional) Configuration for Fleet"
-  sensitive   = true
-  default     = null
+
+  sensitive = true
+  default = {
+    token           = ""
+    url             = ""
+    server_ssl_name = ""
+    http_proxy      = ""
+    https_proxy     = ""
+    no_proxy        = ""
+  }
+}
+
+variable "egress_allow_cidrs" {
+  description = ""
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "ssh_allow_cidrs" {
+  description = ""
+  type        = list(string)
+  default     = []
+}
+
+variable "mirror_ingress_allow_cidrs" {
+  description = ""
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "health_check_allow_cidrs" {
+  description = ""
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }

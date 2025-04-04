@@ -135,6 +135,12 @@ variable "license_key_file_path" {
   default     = ""
 }
 
+variable "iam_instance_profile_name" {
+  description = "Name of the IAM instance profile that should be attached to the EC2 instance"
+  type        = string
+  default     = ""
+}
+
 variable "fleet_config" {
   description = "(optional) Configuration for Fleet. This can be used in place of `license_key_file_path` for licensing the sensor"
   type = object({

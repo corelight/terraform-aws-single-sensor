@@ -77,11 +77,12 @@ module "config" {
 module "instance" {
   source = "./modules//instance"
 
-  aws_key_pair_name       = var.aws_key_pair_name
-  corelight_sensor_ami_id = var.ami_id
-  ebs_volume_size         = var.ebs_volume_size
-  instance_name           = var.instance_name
-  instance_type           = var.instance_type
+  aws_key_pair_name         = var.aws_key_pair_name
+  corelight_sensor_ami_id   = var.ami_id
+  ebs_volume_size           = var.ebs_volume_size
+  instance_name             = var.instance_name
+  instance_type             = var.instance_type
+  iam_instance_profile_name = var.iam_instance_profile_name
   network_interfaces = var.monitoring_interface_id == "" && var.management_interface_id == "" ? [
     {
       id    = module.monitoring_interface[0].network_interface_id,

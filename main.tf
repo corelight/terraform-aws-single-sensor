@@ -66,12 +66,12 @@ module "config" {
   sensor_management_interface_name = "eth1"
   sensor_monitoring_interface_name = "eth0"
 
-  fleet_token          = var.license_key_file_path == "" ? var.fleet_config.token : ""
-  fleet_url            = var.license_key_file_path == "" ? var.fleet_config.url : ""
-  fleet_server_sslname = var.license_key_file_path == "" ? var.fleet_config.server_ssl_name : ""
-  fleet_http_proxy     = var.license_key_file_path == "" ? var.fleet_config.http_proxy : ""
-  fleet_https_proxy    = var.license_key_file_path == "" ? var.fleet_config.https_proxy : ""
-  fleet_no_proxy       = var.license_key_file_path == "" ? var.fleet_config.no_proxy : ""
+  fleet_token          = var.license_key_file_path == "" ? var.fleet_token : ""
+  fleet_url            = var.license_key_file_path == "" ? var.fleet_url : ""
+  fleet_server_sslname = var.license_key_file_path == "" ? var.fleet_server_sslname : ""
+  fleet_http_proxy     = var.license_key_file_path == "" ? var.fleet_http_proxy : ""
+  fleet_https_proxy    = var.license_key_file_path == "" ? var.fleet_https_proxy : ""
+  fleet_no_proxy       = var.license_key_file_path == "" ? var.fleet_no_proxy : ""
 }
 
 module "instance" {

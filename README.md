@@ -61,11 +61,9 @@ health_check_allow_cidrs = ["<your preferred health check CIDR(s)>"]        // d
 mirror_ingress_allow_cidrs = ["<your preferred mirror CIDR(s)>"] // default: ["0.0.0.0/0"]
 
 // Licensing Module Provided - with Fleet (Option A)
-fleet_config = {
-  token           = "<your fleet token>"
-  url             = "https://<your-fleet-instance>:1443/fleet/v1/internal/softsensor/websocket"
-  server_ssl_name = "1.broala.fleet.product.corelight.io"
-}
+fleet_token = "<your fleet token>"
+fleet_url = "https://<your-fleet-instance>:1443/fleet/v1/internal/softsensor/websocket"
+fleet_server_sslname = "1.broala.fleet.product.corelight.io"
 
 // Licensing Module Provided - Without Fleet (Option B)
 license_key_file_path = "/path/to/license.txt"

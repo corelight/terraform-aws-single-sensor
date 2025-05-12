@@ -1,11 +1,11 @@
-# terraform-aws-single-sensor (Early Access)
+# terraform-aws-single-sensor
 Deploy a single AWS Corelight EC2 instance Cloud Sensor. 
 
 ## Getting Started
 
 ### Initialize Terraform state
 ```shell 
-    terraform init
+terraform init
 ```
 
 ### Deployment Permissions
@@ -80,16 +80,16 @@ ebs_volume_size = "<your preferred EBS volume size in GB (number)" // default: 5
 
 ### Copy an example tfvars file and populate it with your details
 ```shell
-  cp minimal-example.tfvars foo.tfvars 
+cp minimal-example.tfvars foo.tfvars 
 ```
 
 ### Plan the deployment
 ```shell
-    terraform plan --var-file foo.tfvars -out=tfplan
+terraform plan --var-file foo.tfvars -out=tfplan
 ```
 
 ### Deploy the Plan
 If the plan looks good go ahead and deploy it
 ```shell
-    terraform apply tfplan
+terraform apply tfplan
 ```

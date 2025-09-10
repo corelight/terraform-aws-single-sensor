@@ -58,7 +58,7 @@ module "monitoring_interface" {
 
 module "config" {
   count  = var.custom_sensor_user_data == "" ? 1 : 0
-  source = "github.com/corelight/terraform-config-sensor?ref=v0.3.0"
+  source = "github.com/corelight/terraform-config-sensor?ref=v1.0.0"
 
   fleet_community_string = var.fleet_community_string
   sensor_license         = var.license_key_file_path != "" ? file(var.license_key_file_path) : ""

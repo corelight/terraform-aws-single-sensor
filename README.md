@@ -63,7 +63,7 @@ mirror_ingress_allow_cidrs = ["<your preferred mirror CIDR(s)>"] // default: ["0
 // Licensing Module Provided - with Fleet (Option A)
 fleet_token = "<your fleet token>"
 fleet_url = "https://<your-fleet-instance>:1443/fleet/v1/internal/softsensor/websocket"
-fleet_server_sslname = "1.broala.fleet.product.corelight.io"
+fleet_server_sslname = "<the ssl name provided by Fleet>"
 
 // Licensing Module Provided - Without Fleet (Option B)
 license_key_file_path = "/path/to/license.txt"
